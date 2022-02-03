@@ -9,7 +9,7 @@ class Interpret {
       return var;
     } else if (auto app = cast(App) expr) {
       if(auto lambda = cast(Lambda) app.left) {
-        return this.subs(lambda.param, app.right, lambda.expr);
+        return this.subs(lambda.param, app.right, this.betaReduction(lambda.expr));
       }
 
       return new App(this.betaReduction(app.left), this.betaReduction(app.right));
