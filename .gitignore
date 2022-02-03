@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/lambda
+lambda.so
+lambda.dylib
+lambda.dll
+lambda.a
+lambda.lib
+lambda-test-*
+*.exe
+*.o
+*.obj
+*.lst
