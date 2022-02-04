@@ -1,6 +1,7 @@
 import std.stdio, std.conv, std.string : chomp;
 
-import lambda.lexer, lambda.expr, lambda.parse, lambda.pretty;
+import lambda.lexer, lambda.expr, lambda.parse;
+import interpreter;
 
 void main() {
 		write("Untyped> ");
@@ -8,7 +9,7 @@ void main() {
 
 		auto lex = new Lexer(a);
 
-		auto parse = new Parser(lex);
+		auto p = new Parser(lex);
 
-		writeln(Pretty.show(new Interpret().betaReduction(parse.app())));
+		writeln(new Interpret().exec(p));
 }
