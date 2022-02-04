@@ -12,11 +12,11 @@ class Var : Expr {
     this.name = name;
   }
 
-  override Var betaReduction() {
+  Var betaReduction() {
     return this;
   }
 
-  override Expr subs(string from, Expr to) {
+  Expr subs(string from, Expr to) {
     if(this.name == from) {
       return to;
     }
@@ -24,7 +24,7 @@ class Var : Expr {
     return this;
   }
 
-  override string show() {
+  string show() {
     return this.name;
   }
 }
@@ -38,18 +38,18 @@ class App : Expr {
     this.right = right;
   }
 
-  override Expr betaReduction() {
+  Expr betaReduction() {
     if(auto lam = cast(Lambda) this.left) {
       return lam.expr.subs(lam.param, this.right);
     }
     return new App(this.left.betaReduction(), this.right.betaReduction());
   }
 
-  override App subs(string from, Expr to) {
+  App subs(string from, Expr to) {
     return new App(this.left.subs(from, to), this.right.subs(from, to));
   }
 
-  override string show() {
+  string show() {
     return "(" ~ this.left.show() ~ " " ~ this.right.show() ~ ")";
   }
 }
@@ -63,11 +63,11 @@ class Lambda : Expr {
     this.expr = expr;
   }
 
-  override Lambda betaReduction() {
+  Lambda betaReduction() {
     return new Lambda(this.param, this.expr.betaReduction());
   }
 
-  override Lambda subs(string from, Expr to) {
+  Lambda subs(string from, Expr to) {
     if(this.param == from) {
       return this;
     }
@@ -75,7 +75,7 @@ class Lambda : Expr {
     return new Lambda(this.param, this.expr.subs(from, to));
   }
 
-  override string show() {
+  string show() {
     return "\\" ~ this.param ~ "." ~ this.expr.show();
   }
 } 
