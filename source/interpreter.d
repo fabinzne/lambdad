@@ -8,7 +8,7 @@ class Interpret {
 
     while({
       App a = cast(App)result;
-      return a;
+      return a !is null;
     }()) {
       result = result.betaReduction();
     }
