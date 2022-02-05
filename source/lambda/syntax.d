@@ -1,4 +1,5 @@
 module lambda.syntax;
+import std.stdio;
 
 interface Expr  {
   Expr betaReduction();
@@ -39,6 +40,8 @@ class App : Expr {
   }
 
   Expr betaReduction() {
+    writeln("=> " ~ this.left.show() ~ " " ~ this.right.show());
+
     if(auto lam = cast(Lambda) this.left) {
       return lam.expr.subs(lam.param, this.right);
     }

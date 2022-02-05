@@ -1,9 +1,18 @@
 module interpreter;
 
-import lambda.parse, lambda.expr;
+import lambda.parse, lambda.expr, lambda.syntax;
 
 class Interpret {
   string exec(Parser p) {
-    return p.app().betaReduction().show();
+    auto result = p.app().betaReduction();
+
+    while({
+      App a = cast(App)result;
+      return a;
+    }()) {
+      result = result.betaReduction();
+    }
+
+    return result.show();
   }
 }
